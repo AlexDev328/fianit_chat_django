@@ -1,6 +1,7 @@
 from rest_framework import serializers
+from rest_framework.relations import PrimaryKeyRelatedField
 
-from .models import Message
+from .models import Message, Author
 
 '''
 class MessageSerializer(serializers.Serializer):
@@ -15,9 +16,17 @@ class MessageSerializer(serializers.Serializer):
 
 
 '''
+
+
+
+
+
+
 class MessageSerializer(serializers.ModelSerializer):
+    author_name = serializers.CharField(source='author.name', read_only=True)
+    author_city = serializers.CharField(source='author.city', read_only=True)
+
 
     class Meta:
         model = Message
-        fields = ('id', 'author', 'created_at', 'content')
-
+        fields = ('id', 'author_name','author_city', 'created_at', 'content')
